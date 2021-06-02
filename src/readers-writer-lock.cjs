@@ -74,6 +74,7 @@ module.exports = class ReadersWriterLock {
     }
   }
 
+  // First execute anything waiting after having given the lock back to the original caller by executing at the end of the event-queue by timeout-hack
   _processQueueLater() {
     if (this._processQueueTimeout) {
       clearTimeout(this._processQueueTimeout)
