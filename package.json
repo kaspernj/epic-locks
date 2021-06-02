@@ -1,0 +1,22 @@
+{
+  "name": "epic-locks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.cjs",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaspernj/epic-locks.git"
+  },
+  "author": "k@spernj.org",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaspernj/epic-locks/issues"
+  },
+  "homepage": "https://github.com/kaspernj/epic-locks#readme",
+  "devDependencies": {
+    "jasmine": "^3.7.0"
+  }
+}
