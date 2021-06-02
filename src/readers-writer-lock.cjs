@@ -84,7 +84,7 @@ module.exports = class ReadersWriterLock {
 
   _processQueue() {
     if (this.writers == 0) {
-      // If no one has begun writing, we should try and proceed to next write item
+      // If no one has begun writing, we should try and proceed to next read item if any
       const readQueueItem = this.readQueue.shift()
 
       if (readQueueItem) {
