@@ -8,6 +8,8 @@ A project meant to contain multiple different type of mutex locks.
 
 A lock that allows multiple readers but only a single writer and prioritises reads. Further more it first processes jobs at the end of the event queue to let the original callers finish work before the lock processes the next queued item.
 
+It queues readers while writing.
+
 #### Initialize
 ```js
 const {ReadersWriterLock} = require("epic-locks")
