@@ -6,9 +6,29 @@ A project meant to contain multiple different type of mutex locks.
 
 ### ReadersWriterLock
 
+#### Initialize
 ```js
 const {ReadersWriterLock} = require("epic-locks")
+const lock = new ReadersWriterLock()
+```
 
+#### Reading
+```js
+lock.read(() => {
+  console.log("Reading!")
+})
+```
+
+#### Writing
+```js
+lock.write(() => {
+  console.log("Writing!")
+})
+```
+
+#### Advanced
+```js
+const {ReadersWriterLock} = require("epic-locks")
 const lock = new ReadersWriterLock()
 const promises = []
 const result = []
