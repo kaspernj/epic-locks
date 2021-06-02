@@ -6,9 +6,11 @@ A project meant to contain multiple different type of mutex locks.
 
 ### ReadersWriterLock
 
-A lock that allows multiple readers but only a single writer and prioritises reads. Further more it first processes jobs at the end of the event queue to let the original callers finish work before the lock processes the next queued item.
-
-It queues readers while writing.
+1. Multiple readers
+2. Single writer
+3. Prioritises reads
+4. Processes queued jobs at the end of the event queue to let the original callers finish work before the lock processes the next queued item
+5. Queues reads while writing
 
 #### Initialize
 ```js
