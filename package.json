@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/kaspernj/epic-locks#readme",
   "devDependencies": {
-    "jasmine": "^3.7.0"
+    "jasmine": "^4.0.0"
   }
 }
