@@ -50,8 +50,10 @@ module.exports = class ReadersWriterLock {
     this._readers++
 
     try {
-      await item.callback()
-      item.resolve()
+      let result
+
+      if (item.callback) result = await item.callback()
+      await item.resolve(result)
     } catch (error) {
       item.reject(error)
     } finally {
@@ -64,8 +66,10 @@ module.exports = class ReadersWriterLock {
     this._writers++
 
     try {
-      await item.callback()
-      item.resolve()
+      let result
+
+      if (item.callback) result = await item.callback()
+      await item.resolve(result)
     } catch (error) {
       item.reject(error)
     } finally {
@@ -80,10 +84,10 @@ module.exports = class ReadersWriterLock {
       clearTimeout(this._processQueueTimeout)
     }
 
-    this._processQueueTimeout = setTimeout(() => this._processQueue(), 0)
+    this._processQueueTimeout = setTimeout(this._processQueue, 0)
   }
 
-  _processQueue() {
+  _processQueue = () => {
     if (this._writers == 0) {
       // If no one has begun writing, we should try and proceed to next read item if any
       const readQueueItem = this._readQueue.shift()
