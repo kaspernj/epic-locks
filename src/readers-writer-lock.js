@@ -1,4 +1,4 @@
-module.exports = class ReadersWriterLock {
+export default class ReadersWriterLock {
   constructor(args = {}) {
     this._debug = args.debug
     this._readers = 0

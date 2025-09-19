@@ -1,5 +1,5 @@
-const ReadersWriterLock = require("./src/readers-writer-lock.cjs")
+import ReadersWriterLock from "./src/readers-writer-lock.js"
 
-module.exports = {
+export {
   ReadersWriterLock
 }

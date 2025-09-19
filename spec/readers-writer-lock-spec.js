@@ -1,5 +1,5 @@
-const awaitTimeout = require("./await-timeout.cjs")
-const ReadersWriterLock = require("../src/readers-writer-lock.cjs")
+import awaitTimeout from "./await-timeout.js"
+import ReadersWriterLock from "../src/readers-writer-lock.js"
 
 describe("ReadersWriterLock", () => {
   it("waits for reads before letting someone write", async () => {
