@@ -2,14 +2,16 @@ export default class Mutex {
   constructor(args = {}) {
     this._debug = args.debug
     this._readers = 0
-    this._writers = 0
     this._processQueueTimeout = null
     this._syncQueue = []
-    this._writeQueue = []
   }
 
   sync(callback) {
     if (this._debug) this._log("sync")
+
+    if (this._readers === 0 && this._syncQueue.length === 0) {
+      return this.runJobInstantly(callback)
+    }
 
     return new Promise((resolve, reject) => {
       this._syncQueue.push({callback, resolve, reject})
@@ -17,8 +19,22 @@ export default class Mutex {
     })
   }
 
+  async runJobInstantly(callback) {
+    this._readers++
+
+    try {
+      return await callback()
+    } finally {
+      this._readers--
+
+      if (this._readers === 0 && this._syncQueue.length > 0) {
+        this._processQueueLater()
+      }
+    }
+  }
+
   _log(message) {
-    console.log("ReadersWriteLock", message, JSON.stringify({readers: this._readers, writers: this._writers}))
+    console.log("ReadersWriteLock", message, JSON.stringify({readers: this._readers}))
   }
 
   // First execute anything waiting after having given the lock back to the original caller by executing at the end of the event-queue by timeout-hack

@@ -10,6 +10,11 @@ export default class ReadersWriterLock {
 
   read(callback) {
     if (this._debug) this._log("read")
+
+    if (this._readers === 0 && this._writers === 0 && this._readQueue.length === 0 && this._writeQueue.length === 0) {
+      return this.runReadJobInstantly(callback)
+    }
+
     return new Promise((resolve, reject) => {
       this._readWithResolve({callback, resolve, reject})
     })
@@ -17,9 +22,42 @@ export default class ReadersWriterLock {
 
   write(callback) {
     if (this._debug) this._log("write")
+
+    if (this._readers === 0 && this._writers === 0 && this._readQueue.length === 0 && this._writeQueue.length === 0) {
+      return this.runWriteJobInstantly(callback)
+    }
+
     return new Promise((resolve, reject) => {
       this._writeWithResolve({callback, resolve, reject})
     })
+  }
+
+  async runReadJobInstantly(callback) {
+    this._readers++
+
+    try {
+      return await callback()
+    } finally {
+      this._readers--
+
+      if (this._readQueue.length > 0 || this._writeQueue.length > 0) {
+        this._processQueueLater()
+      }
+    }
+  }
+
+  async runWriteJobInstantly(callback) {
+    this._writers++
+
+    try {
+      return await callback()
+    } finally {
+      this._writers--
+
+      if (this._readQueue.length > 0 || this._writeQueue.length > 0) {
+        this._processQueueLater()
+      }
+    }
   }
 
   _log(message) {
