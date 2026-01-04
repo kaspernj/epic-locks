@@ -3,6 +3,9 @@
   "type": "module",
   "version": "1.0.5",
   "description": "",
+  "files": [
+    "build/**"
+  ],
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "exports": {
@@ -12,10 +15,11 @@
     }
   },
   "scripts": {
-    "test": "jasmine",
+    "build": "tsc",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "prepublishOnly": "npm run build",
+    "test": "jasmine",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
