@@ -14,7 +14,7 @@ A project meant to contain multiple different type of mutex locks.
 
 #### Initialize
 ```js
-const {ReadersWriterLock} = require("epic-locks")
+import {ReadersWriterLock} from "epic-locks"
 const lock = new ReadersWriterLock()
 ```
 
@@ -34,7 +34,7 @@ lock.write(() => {
 
 #### Advanced
 ```js
-const {ReadersWriterLock} = require("epic-locks")
+import {ReadersWriterLock} from "epic-locks"
 const lock = new ReadersWriterLock()
 const promises = []
 const result = []

@@ -1,11 +1,29 @@
+/**
+ * @typedef {Object} MutexOptions
+ * @property {boolean} [debug]
+ */
+
+/**
+ * Mutex for running async work sequentially.
+ */
 export default class Mutex {
+  /**
+   * @param {MutexOptions} [args]
+   */
   constructor(args = {}) {
     this._debug = args.debug
     this._readers = 0
     this._processQueueTimeout = null
+    /** @type {Array<MutexQueueItem<unknown>>} */
     this._syncQueue = []
   }
 
+  /**
+   * Run a job with exclusive access.
+   * @template T
+   * @param {() => (T | Promise<T>)} callback
+   * @returns {Promise<T>}
+   */
   sync(callback) {
     if (this._debug) this._log("sync")
 
@@ -14,11 +32,19 @@ export default class Mutex {
     }
 
     return new Promise((resolve, reject) => {
-      this._syncQueue.push({callback, resolve, reject})
+      /** @type {MutexQueueItem<T>} */
+      const queueItem = {callback, resolve, reject}
+
+      this._syncQueue.push(/** @type {MutexQueueItem<unknown>} */ (queueItem))
       this._processQueueLater()
     })
   }
 
+  /**
+   * @template T
+   * @param {() => (T | Promise<T>)} callback
+   * @returns {Promise<T>}
+   */
   async runJobInstantly(callback) {
     this._readers++
 
@@ -33,11 +59,18 @@ export default class Mutex {
     }
   }
 
+  /**
+   * @param {string} message
+   * @returns {void}
+   */
   _log(message) {
     console.log("ReadersWriteLock", message, JSON.stringify({readers: this._readers}))
   }
 
   // First execute anything waiting after having given the lock back to the original caller by executing at the end of the event-queue by timeout-hack
+  /**
+   * @returns {void}
+   */
   _processQueueLater() {
     if (this._processQueueTimeout) {
       clearTimeout(this._processQueueTimeout)
@@ -46,6 +79,9 @@ export default class Mutex {
     this._processQueueTimeout = setTimeout(this._processQueue, 0)
   }
 
+  /**
+   * @returns {Promise<void>}
+   */
   _processQueue = async () => {
     if (this._debug) this._log("processQueue")
 
@@ -60,6 +96,10 @@ export default class Mutex {
     }
   }
 
+  /**
+   * @param {MutexQueueItem<unknown>} item
+   * @returns {Promise<void>}
+   */
   async _runJob(item) {
     this._readers++
 
@@ -73,3 +113,11 @@ export default class Mutex {
     }
   }
 }
+
+/**
+ * @template T
+ * @typedef {Object} MutexQueueItem
+ * @property {() => (T | Promise<T>)} callback
+ * @property {(value: T) => void} resolve
+ * @property {(error: unknown) => void} reject
+ */

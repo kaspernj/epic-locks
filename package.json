@@ -3,9 +3,19 @@
   "type": "module",
   "version": "1.0.4",
   "description": "",
-  "main": "index.cjs",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -18,6 +28,10 @@
   },
   "homepage": "https://github.com/kaspernj/epic-locks#readme",
   "devDependencies": {
-    "jasmine": "^5.10.0"
+    "@types/node": "^20.11.30",
+    "eslint": "^8.57.0",
+    "eslint-plugin-jsdoc": "^48.11.0",
+    "jasmine": "^5.10.0",
+    "typescript": "^5.4.5"
   }
 }
