@@ -3,6 +3,7 @@
     "allowJs": true,
     "checkJs": true,
     "declaration": true,
+    "declarationMap": true,
     "emitDeclarationOnly": false,
     "inlineSourceMap": true,
     "inlineSources": true,
