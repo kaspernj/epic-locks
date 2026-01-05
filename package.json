@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/kaspernj/epic-locks#readme",
   "devDependencies": {
-    "@types/node": "^20.11.30",
+    "@types/node": "^25.0.3",
     "eslint": "^9.39.2",
     "eslint-plugin-jsdoc": "^48.11.0",
     "jasmine": "^5.10.0",
