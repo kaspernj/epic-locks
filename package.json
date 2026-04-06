@@ -30,6 +30,6 @@
     "eslint": "^10.2.0",
     "eslint-plugin-jsdoc": "^62.4.1",
     "jasmine": "^6.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^6.0.2"
   }
 }
