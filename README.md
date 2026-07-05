@@ -4,6 +4,27 @@ A project meant to contain multiple different type of mutex locks.
 
 ## Usage
 
+Import each lock directly from its own module. The package intentionally has
+no barrel entry point, so you only pull in the lock you actually use:
+
+```js
+import Mutex from "epic-locks/build/mutex.js"
+import ReadersWriterLock from "epic-locks/build/readers-writer-lock.js"
+```
+
+### Mutex
+
+Runs async jobs one at a time (sequentially) — exclusive access, in call order.
+
+```js
+import Mutex from "epic-locks/build/mutex.js"
+const mutex = new Mutex()
+
+const result = await mutex.sync(async () => {
+  return await doSomethingExclusive()
+})
+```
+
 ### ReadersWriterLock
 
 1. Multiple readers
@@ -14,7 +35,7 @@ A project meant to contain multiple different type of mutex locks.
 
 #### Initialize
 ```js
-import {ReadersWriterLock} from "epic-locks"
+import ReadersWriterLock from "epic-locks/build/readers-writer-lock.js"
 const lock = new ReadersWriterLock()
 ```
 
@@ -34,7 +55,7 @@ lock.write(() => {
 
 #### Advanced
 ```js
-import {ReadersWriterLock} from "epic-locks"
+import ReadersWriterLock from "epic-locks/build/readers-writer-lock.js"
 const lock = new ReadersWriterLock()
 const promises = []
 const result = []
