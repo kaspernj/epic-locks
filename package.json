@@ -33,6 +33,6 @@
     "eslint-plugin-jsdoc": "^63.0.8",
     "jasmine": "^6.0.0",
     "release-patch": "^1.0.0",
-    "typescript": "^6.0.2"
+    "typescript": "^7.0.2"
   }
 }
