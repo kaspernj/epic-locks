@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/node": "^26.0.0",
     "eslint": "^10.2.0",
-    "eslint-plugin-jsdoc": "^63.0.8",
+    "eslint-plugin-jsdoc": "^64.1.0",
     "jasmine": "^6.0.0",
     "release-patch": "^1.0.0",
     "typescript": "^7.0.2"
