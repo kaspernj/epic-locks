@@ -1,0 +1,13 @@
+before_script:
+  - npm install
+# Ordered, last match wins. `**/*` first so the list fails open: every changed
+# path that is not named below runs this build. `!` entries must stay quoted —
+# unquoted, js-yaml reads `- !README.md` as a scalar tag and the negation
+# silently disappears from the config.
+paths:
+  - "**/*"
+  - "!*.md"
+  - "!.github/**"
+  - "!.gitignore"
+script:
+  - npm test
